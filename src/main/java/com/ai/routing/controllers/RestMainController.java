@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 @RestController
 public class RestMainController {
@@ -29,6 +30,16 @@ public class RestMainController {
     @ResponseBody
     public String postResult(@RequestParam String bin, @RequestParam String psp, @RequestParam Boolean result) {
         aiRoutingService.postResult(new BinPsp(bin, psp), result);
+        return "success";
+    }
+
+    @RequestMapping(value = "/postBulkResult", method = RequestMethod.POST, produces = "text/html")
+    @ResponseBody
+    public String postBulkResult(@RequestParam String bin, @RequestParam String psp, @RequestParam Boolean result) {
+        IntStream.rangeClosed(1, 8)
+                .forEach(i ->
+                        aiRoutingService.postResult(new BinPsp(bin, psp), result)
+                );
         return "success";
     }
 

@@ -20,14 +20,14 @@
         <tr>
             <td></td>
             <td ng-repeat="psp in psps">
-                <img src="{{psp}}.png" style="width: 250px;"/>
+                <img class="centered-psp" src="{{psp}}.png"/>
             </td>
         </tr>
         <tr ng-repeat="bin in bins">
             <td>
                 <div style="width: 50%;">
                     <div><img src="chipcard-icon-icons.png" style="width: 80px;"/></div>
-                    <p style="text-align: center; font-size: 30px; width: 80px;">{{bin}}</p>
+                    <p style="text-align: center; font-size: 30px; width: 80px; text-transform: uppercase;">{{bin}}</p>
                 </div>
             </td>
             <td ng-repeat="psp in psps">

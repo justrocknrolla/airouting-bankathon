@@ -7,7 +7,7 @@ air.factory('Chart', function ($resource) {
 });
 
 air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
-    var psps = $scope.psps = ['psp1', 'psp2'];
+    var psps = $scope.psps = ['adyen', 'wirecard'];
     var bins = $scope.bins = ['bin1', 'bin2', 'bin3'];
     // var chartsData = $scope.chartsData = {};
     var chartsCfgs = $scope.chartsCfgs = {};
@@ -54,7 +54,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
                         series: [
                             {
                                 name: 'P',
-                                color: psp === 'psp1' ? '#77ff77' : '#7777ff',
+                                color: psp === 'adyen' ? '#77ff77' : '#7777ff',
                                 data: vals
                             }
                         ]
