@@ -2,24 +2,21 @@ import sys
 import random
 from itertools import izip
 
-PSP_LIST = ["psp1", "psp2"]
-BIN_LIST = ["bin1", "bin2", "bin3"]
+from config import PSP_LIST, BIN_LIST, REQUIRED_NUMBER_OF_ARGUMENTS, BIN_PSP_PAIRS
 
 
 def generate_psp_bin_list():
     for psp in PSP_LIST:
-        for bin in BIN_LIST:
-            yield (psp, bin)
+        for bank_identification_number in BIN_LIST:
+            yield (psp, bank_identification_number)
 
 
 def parse_commandline():
     args = sys.argv
-    bin_psp_pair = len(PSP_LIST) * len(BIN_LIST)
-    required_number = 2 * bin_psp_pair + 1
-    if required_number <> len(args):
-        raise ValueError("improper number of arguments, must be {0}".format(required_number))
-    for i in range(0, bin_psp_pair):
-        actual_probability, count = args[2*i+1], args[2*(i+1)]
+    if not REQUIRED_NUMBER_OF_ARGUMENTS == len(args):
+        raise ValueError("improper number of arguments, must be {0}".format(REQUIRED_NUMBER_OF_ARGUMENTS))
+    for i in range(0, BIN_PSP_PAIRS):
+        actual_probability, count = args[2 * i + 1], args[2 * (i + 1)]
         yield (actual_probability, count)
 
 
@@ -34,10 +31,10 @@ def generate_historical_records_for_single_combinations(actual_probability, coun
 
 def generate_all_records(psp_bins, args):
     for psp_bin_pair, arg_pair in izip(psp_bins, args):
-        psp, bin = psp_bin_pair
+        psp, bank_identification_number = psp_bin_pair
         actual_probability, count = arg_pair
         for observation in generate_historical_records_for_single_combinations(float(actual_probability), int(count)):
-            yield (psp, bin, observation)
+            yield (psp, bank_identification_number, observation)
 
 
 if __name__ == "__main__":
@@ -46,5 +43,5 @@ if __name__ == "__main__":
     records = generate_all_records(psp_bins, args)
 
     for record in records:
-        psp, bin, observation = record
-        print("{0},{1},{2}".format(psp, bin, observation))
+        psp, bank_identification_number, observation = record
+        print("{0},{1},{2}".format(psp, bank_identification_number, observation))
