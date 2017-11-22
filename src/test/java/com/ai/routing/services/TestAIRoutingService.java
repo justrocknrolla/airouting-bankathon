@@ -2,6 +2,7 @@ package com.ai.routing.services;
 
 import com.ai.routing.model.BinPsp;
 import com.ai.routing.model.Point;
+import com.ai.routing.model.Stats;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +26,16 @@ public class TestAIRoutingService {
     private final String PSP2 = "psp2";
     private final BinPsp BIN1_PSP1 = new BinPsp(BIN1, PSP1);
     private final BinPsp BIN1_PSP2 = new BinPsp(BIN1, PSP2);
+    private final float EPSILON = 0.001f;
 
+    private float calculateAverage4Beta(float alpha, float beta) {
+        return alpha / (alpha + beta);
+    }
+
+    private float calculateStandardDeviation4Beta(float alpha, float beta) {
+        double variance = alpha * beta / (Math.pow( alpha + beta, 2) * ( alpha + beta + 1));
+        return (float) Math.pow(variance, 0.5);
+    }
     @PostConstruct
     private void setUp() {
         service = new AIRoutingService();
@@ -109,7 +119,6 @@ public class TestAIRoutingService {
     private void assertSameSets(List<Point> expectedData, List<Point> chartData) {
         assertEquals(expectedData.size(), chartData.size());
 
-        float EPSILON = 0.001f;
         float xExpected, xActual;
         float yExpected, yActual;
 
@@ -140,5 +149,36 @@ public class TestAIRoutingService {
         expectedData.add(new Point(1.0f, 0f));
 
         assertSameSets(expectedData, chartData);
+    }
+
+    @Test
+    public void testStatsReturnedWhenNoHistoryAvailable() {
+
+        Stats result = service.getStats(BIN1_PSP1);
+        float alphaShape = 1.0f;
+        float betaShape = 1.0f;
+        float expectedAverage = this.calculateAverage4Beta(alphaShape,betaShape);
+        float expectedDeviation = this.calculateStandardDeviation4Beta(alphaShape,betaShape);
+
+        assertEquals(expectedAverage, result.getAverage(), EPSILON);
+        assertEquals(expectedDeviation, result.getDeviation(), EPSILON);
+    }
+
+    @Test
+    public void testStatsReturnedWhenHistoryAvailable() {
+
+        service.postResult(BIN1_PSP1, true);
+        service.postResult(BIN1_PSP1, true);
+        service.postResult(BIN1_PSP1, true);
+
+        Stats result = service.getStats(BIN1_PSP1);
+
+        float alphaShape = 4.0f;
+        float betaShape = 1.0f;
+        float expectedAverage = this.calculateAverage4Beta(alphaShape,betaShape);
+        float expectedDeviation = this.calculateStandardDeviation4Beta(alphaShape,betaShape);
+
+        assertEquals(expectedAverage, result.getAverage(), EPSILON);
+        assertEquals(expectedDeviation, result.getDeviation(), EPSILON);
     }
 }
