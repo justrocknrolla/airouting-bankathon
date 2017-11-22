@@ -15,8 +15,7 @@
 <body ng-app="air">
 <h1 class="text-center ai-routing-heading">AIRouting</h1>
 <div ng-controller="ChartsCtrl">
-    <table class="table charts-tbl"
-           ng-if="loaded==total">
+    <table class="table charts-tbl">
         <tr>
             <td></td>
             <td ng-repeat="psp in psps">
@@ -31,7 +30,9 @@
                 </div>
             </td>
             <td ng-repeat="psp in psps">
-                <highchart config="chartsCfgs[bin][psp]"></highchart>
+                <div ng-if="chartsCfgs[bin][psp]">
+                    <highchart config="chartsCfgs[bin][psp]"></highchart>
+                </div>
             </td>
         </tr>
     </table>
