@@ -2,7 +2,8 @@ var air = angular.module('air', ['highcharts-ng', 'ngResource']);
 
 air.factory('Chart', function ($resource) {
     return $resource('/:action/:id', {}, {
-        chart: {method: 'GET', isArray: true, params: {action: 'chart'}}
+        chart: {method: 'GET', isArray: true, params: {action: 'chart'}},
+        stats: {method: 'GET', params: {action: 'stats'}}
     });
 });
 
@@ -18,6 +19,14 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
     for (var i = 0; i < psps.length; i++) {
         for (var j = 0; j < bins.length; j++) {
             (function (bin, psp) {
+                var average = 0.0;
+                var deviation = 0.0;
+                Chart.stats({bin: bin, psp: psp}, function(result) {
+                    average = (result.average * 100).toFixed(0);
+                    deviation = (result.deviation * 100).toFixed(0);
+                });
+
+
                 Chart.chart({bin: bin, psp: psp, n: 100}, function (res) {
                     $scope.loaded++;
 
@@ -29,7 +38,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
                     // (chartsData[bin] || (chartsData[bin] = {}))[psp] = res;
                     (chartsCfgs[bin] || (chartsCfgs[bin] = {}))[psp] = {
                         title: {
-                            text: ''
+                            text: average + '% +/- ' + deviation + '%'
                         },
                         chart: {
                             type: 'area',
