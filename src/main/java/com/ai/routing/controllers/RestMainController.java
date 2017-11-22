@@ -2,6 +2,7 @@ package com.ai.routing.controllers;
 
 import com.ai.routing.model.BinPsp;
 import com.ai.routing.model.Point;
+import com.ai.routing.model.Stats;
 import com.ai.routing.services.AIRoutingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -49,6 +50,13 @@ public class RestMainController {
                                     @RequestParam String psp,
                                     @RequestParam(defaultValue = "100") int n) {
         return aiRoutingService.getChartData(new BinPsp(bin, psp), n);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/stats", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Stats getStatsData(@RequestParam String bin,
+                              @RequestParam String psp) {
+        return aiRoutingService.getStats(new BinPsp(bin, psp));
     }
 
 }

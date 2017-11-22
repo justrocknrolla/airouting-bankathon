@@ -1,9 +1,6 @@
 package com.ai.routing.services;
 
-import com.ai.routing.model.BinPsp;
-import com.ai.routing.model.DataStorage;
-import com.ai.routing.model.History;
-import com.ai.routing.model.Point;
+import com.ai.routing.model.*;
 import org.apache.commons.math3.distribution.BetaDistribution;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.springframework.stereotype.Service;
@@ -75,5 +72,9 @@ public class AIRoutingService {
         }
 
         return chartData;
+    }
+
+    public Stats getStats(BinPsp binPsp) {
+        return null;
     }
 }
