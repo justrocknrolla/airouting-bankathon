@@ -14,7 +14,7 @@ import java.util.Set;
 @Service
 public class AIRoutingService {
 
-    private DataStorage dataStorage = new DataStorage();
+    private DataStorage storage = new DataStorage();
 
     private Float calculateExpectedProbability(String bin, String psp) {
         BetaDistribution beta = this.getDecisionDistribution(bin, psp);
@@ -22,7 +22,7 @@ public class AIRoutingService {
     }
 
     private BetaDistribution getDecisionDistribution(String bin, String psp) {
-        History record = dataStorage.getHistory(new BinPsp(bin, psp));
+        History record = storage.getHistory(new BinPsp(bin, psp));
         return new BetaDistribution(record.getSuccessCount() + 1, record.getFailCount() + 1);
     }
 
@@ -45,11 +45,11 @@ public class AIRoutingService {
     }
 
     private Set<String> getPSPs(String bin) {
-        return new HashSet<>();
+        return storage.getAllPsps(bin);
     }
 
-    public void postPSP(String bin, String psp, Boolean result) {
-        // TODO
+    public void postResult(BinPsp binPsp, boolean result) {
+        storage.postResult(binPsp, result);
     }
 
     public List<Point> getChartData(String bin, String psp, int n) {

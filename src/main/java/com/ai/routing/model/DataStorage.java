@@ -20,11 +20,11 @@ public class DataStorage {
         return history.getOrDefault(binPsp, new History());
     }
 
-    Set<String> getAllBins(String psp) {
+    public Set<String> getAllBins(String psp) {
         return pspBins.getOrDefault(psp, new HashSet<>());
     }
 
-    Set<String> getAllPsps(String bin) {
+    public Set<String> getAllPsps(String bin) {
         return binPSPs.getOrDefault(bin, new HashSet<>());
     }
 

@@ -1,5 +1,6 @@
 package com.ai.routing.controllers;
 
+import com.ai.routing.model.BinPsp;
 import com.ai.routing.model.Point;
 import com.ai.routing.services.AIRoutingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class RestMainController {
     @RequestMapping(value = "/postResult", method = RequestMethod.POST, produces = "text/html")
     @ResponseBody
     public String postResult(@RequestParam String bin, @RequestParam String psp, @RequestParam Boolean result) {
-        aiRoutingService.postPSP(bin, psp, result);
+        aiRoutingService.postResult(new BinPsp(bin, psp), result);
         return "success";
     }
 
