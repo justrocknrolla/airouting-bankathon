@@ -16,6 +16,9 @@ import static org.junit.Assert.assertTrue;
 public class TestDataStorage {
 
     private DataStorage storage;
+    private final String BIN1 = "bin1";
+    private final String PSP1 = "psp1";
+    private final BinPsp BIN1_PSP1 = new BinPsp(BIN1, PSP1);
 
     @PostConstruct
     private void setUp() {
@@ -24,7 +27,7 @@ public class TestDataStorage {
 
     @Test
     public void testGetHistoryWhenThereIsNoHistory() {
-        History result = storage.getHistory(new BinPsp("bin1", "psp1"));
+        History result = storage.getHistory(new BinPsp(BIN1, PSP1));
         int successful = result.getSuccessCount();
         int unsuccessful = result.getFailCount();
 
@@ -34,15 +37,27 @@ public class TestDataStorage {
 
     @Test
     public void testGetAllBinsWhenThereIsNoHistory() {
-        Set<String> bins = storage.getAllBins("psp1");
+        Set<String> bins = storage.getAllBins(PSP1);
 
         assertTrue(bins.isEmpty());
     }
 
     @Test
     public void testGetAllPspsWhenThereIsNoHistory() {
-        Set<String> psps = storage.getAllPsps("bin1");
+        Set<String> psps = storage.getAllPsps(BIN1);
 
         assertTrue(psps.isEmpty());
+    }
+
+    @Test
+    public void testGetHistoryWhenSuccessfulObservationPosted() {
+        storage.postResult(BIN1_PSP1, true);
+
+        History result = storage.getHistory(BIN1_PSP1);
+        int successful = result.getSuccessCount();
+        int unsuccessful = result.getFailCount();
+
+        assertEquals(1, successful);
+        assertEquals(0, unsuccessful);
     }
 }

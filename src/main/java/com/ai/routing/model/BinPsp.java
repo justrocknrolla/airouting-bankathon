@@ -33,4 +33,12 @@ public class BinPsp {
     public int hashCode() {
         return Objects.hash(bin, psp);
     }
+
+    @Override
+    public String toString() {
+        return "BinPsp{" +
+                "bin='" + bin + '\'' +
+                ", psp='" + psp + '\'' +
+                '}';
+    }
 }
