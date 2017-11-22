@@ -7,9 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.PostConstruct;
+import java.util.HashSet;
+import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -18,7 +19,9 @@ public class TestAIRoutingService {
     private AIRoutingService service;
     private final String BIN1 = "bin1";
     private final String PSP1 = "psp1";
+    private final String PSP2 = "psp2";
     private final BinPsp BIN1_PSP1 = new BinPsp(BIN1, PSP1);
+    private final BinPsp BIN1_PSP2 = new BinPsp(BIN1, PSP2);
 
     @PostConstruct
     private void setUp() {
@@ -44,5 +47,44 @@ public class TestAIRoutingService {
         service.postResult(BIN1_PSP1, false);
         String result = service.suggestPSP(BIN1);
         assertEquals(PSP1, result);
+    }
+
+    @Test
+    public void testPspSuggestedWhenSimilarProviderAvailable() {
+        service.postResult(BIN1_PSP1, true);
+        service.postResult(BIN1_PSP1, true);
+        service.postResult(BIN1_PSP2, true);
+        service.postResult(BIN1_PSP2, true);
+
+        Set<String> proposedProviders = new HashSet<>();
+        String currentRecommendation;
+        for (int i = 0; i < 10; i++) {
+            currentRecommendation = service.suggestPSP(BIN1);
+            proposedProviders.add(currentRecommendation);
+        }
+
+        assertTrue(proposedProviders.contains(PSP1));
+        assertTrue(proposedProviders.contains(PSP2));
+    }
+
+    @Test
+    public void testPspSuggestedWhenMuchSuperiorProviderAvailable() {
+        for (int i = 0; i < 10; i++) {
+            service.postResult(BIN1_PSP1, false);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            service.postResult(BIN1_PSP2, true);
+        }
+
+        Set<String> proposedProviders = new HashSet<>();
+        String currentRecommendation;
+        for (int i = 0; i < 10; i++) {
+            currentRecommendation = service.suggestPSP(BIN1);
+            proposedProviders.add(currentRecommendation);
+        }
+
+        assertFalse(proposedProviders.contains(PSP1));
+        assertTrue(proposedProviders.contains(PSP2));
     }
 }
