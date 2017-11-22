@@ -156,4 +156,17 @@ public class TestDataStorage {
         assertTrue(bins.contains(BIN1));
         assertTrue(bins.contains(BIN2));
     }
+
+    @Test
+    public void testGetAllPspsWhenMultipleObservationPostedForDifferentPairs(){
+        DataStorage storage = new DataStorage();
+        storage.postResult(BIN1_PSP1, false);
+        storage.postResult(new BinPsp(BIN1, PSP2), false);
+        storage.postResult(new BinPsp(BIN1, PSP3), false);
+
+        Set<String> psps = storage.getAllPsps(BIN1);
+        assertTrue(psps.contains(PSP1));
+        assertTrue(psps.contains(PSP2));
+        assertTrue(psps.contains(PSP3));
+    }
 }
