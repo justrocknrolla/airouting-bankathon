@@ -1,5 +1,6 @@
 package com.ai.routing.controllers;
 
+import com.ai.routing.model.Point;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +25,9 @@ public class RestMainController {
 
     @ResponseBody
     @RequestMapping(value = "/chart", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Object> getChartData(@RequestParam String bin,
-                                     @RequestParam String psp,
-                                     @RequestParam(defaultValue = "100") int n) {
+    public List<Point> getChartData(@RequestParam String bin,
+                                    @RequestParam String psp,
+                                    @RequestParam(defaultValue = "100") int n) {
         return null;
     }
 
