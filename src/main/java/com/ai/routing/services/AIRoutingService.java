@@ -52,7 +52,7 @@ public class AIRoutingService {
         storage.postResult(binPsp, result);
     }
 
-    public List<Point> getChartData(String bin, String psp, int n) {
+    public List<Point> getChartData(BinPsp binPsp, int n) {
         return null;
     }
 }
