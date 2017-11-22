@@ -77,8 +77,8 @@ public class AIRoutingService {
     public Stats getStats(BinPsp binPsp) {
         BetaDistribution beta = this.getDecisionDistribution(binPsp);
         float mean = (float) beta.getNumericalMean();
-        float standard_deviation = (float) Math.pow(beta.getNumericalVariance(), 0.5);
+        float standardDeviation = (float) Math.pow(beta.getNumericalVariance(), 0.5);
 
-        return new Stats(mean, standard_deviation);
+        return new Stats(mean, standardDeviation);
     }
 }
