@@ -37,7 +37,7 @@ public class RestMainController {
     public List<Point> getChartData(@RequestParam String bin,
                                     @RequestParam String psp,
                                     @RequestParam(defaultValue = "100") int n) {
-        return aiRoutingService.getChartData(bin, psp, n);
+        return aiRoutingService.getChartData(new BinPsp(bin, psp), n);
     }
 
 }
