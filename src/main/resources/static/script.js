@@ -6,7 +6,7 @@ air.factory('Chart', function ($resource) {
     });
 });
 
-air.controller('ChartsCtrl', function ChartsCtrl($scope, Chart) {
+air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
     var psps = $scope.psps = ['psp1', 'psp2'];
     var bins = $scope.bins = ['bin1', 'bin2', 'bin3'];
     // var chartsData = $scope.chartsData = {};
@@ -32,8 +32,10 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, Chart) {
                             text: ''
                         },
                         chart: {
-                            type: 'area'
-                            // type: 'line'
+                            type: 'area',
+                            width: '300',
+                            height: '200',
+                            backgroundColor: '#f2f2f2'
                         },
                         xAxis: {
                             categories: []

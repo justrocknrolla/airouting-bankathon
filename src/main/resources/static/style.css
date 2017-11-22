@@ -1,9 +1,22 @@
 
+body {
+    background-color: #f2f2f2;
+}
+
 .highcharts-credits {
     display: none;
 }
 
 .charts-tbl {
     width: 80%;
-    margin-left: 10%;
+}
+
+.ai-routing-heading {
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    color: rgb(127, 127, 127);
+    padding-top: 10px;
+    padding-left: 5px;
+    text-align: left !important;
 }

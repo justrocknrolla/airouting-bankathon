@@ -13,14 +13,14 @@
 <title>AIRouting</title>
 
 <body ng-app="air">
-<h1 class="text-center">AIRouting</h1>
+<h1 class="text-center ai-routing-heading">AIRouting</h1>
 <div ng-controller="ChartsCtrl">
-    <table class="table table-bordered charts-tbl"
+    <table class="table charts-tbl"
            ng-if="loaded==total">
         <tr>
             <td></td>
             <td ng-repeat="psp in psps">
-                <img src="{{psp}}.png" style="width: 300px;"/>
+                <img src="{{psp}}.png" style="width: 250px;"/>
             </td>
         </tr>
         <tr ng-repeat="bin in bins">
