@@ -29,7 +29,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, Chart) {
                     // (chartsData[bin] || (chartsData[bin] = {}))[psp] = res;
                     (chartsCfgs[bin] || (chartsCfgs[bin] = {}))[psp] = {
                         title: {
-                            text: bin + ' / ' + psp
+                            text: ''
                         },
                         chart: {
                             type: 'area'

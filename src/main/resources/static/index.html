@@ -1,4 +1,3 @@
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-resource.js"></script>
@@ -14,15 +13,27 @@
 <title>AIRouting</title>
 
 <body ng-app="air">
-    <h1 class="text-center">AIRouting</h1>
-    <div ng-controller="ChartsCtrl">
-        <table class="table table-bordered charts-tbl"
-               ng-if="loaded==total">
-            <tr ng-repeat="bin in bins">
-                <td ng-repeat="psp in psps">
-                    <highchart config="chartsCfgs[bin][psp]"></highchart>
-                </td>
-            </tr>
-        </table>
-    </div>
+<h1 class="text-center">AIRouting</h1>
+<div ng-controller="ChartsCtrl">
+    <table class="table table-bordered charts-tbl"
+           ng-if="loaded==total">
+        <tr>
+            <td></td>
+            <td ng-repeat="psp in psps">
+                <img src="{{psp}}.png" style="width: 300px;"/>
+            </td>
+        </tr>
+        <tr ng-repeat="bin in bins">
+            <td>
+                <div style="width: 50%;">
+                    <div><img src="chipcard-icon-icons.png" style="width: 80px;"/></div>
+                    <p style="text-align: center; font-size: 30px; width: 80px;">{{bin}}</p>
+                </div>
+            </td>
+            <td ng-repeat="psp in psps">
+                <highchart config="chartsCfgs[bin][psp]"></highchart>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
