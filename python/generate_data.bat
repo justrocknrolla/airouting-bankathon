@@ -1,0 +1,1 @@
+python main.py 0.2 10 0.8 10 0.5 10 0.5 10 0.8 10 0.2 10 > output.txt
