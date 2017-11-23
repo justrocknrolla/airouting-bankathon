@@ -15,7 +15,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
     var chartsCfgs = $scope.chartsCfgs = {};
 
     $scope.suggestPSP = function (bin) {
-        Air.suggestPSP({bin:bin}, function (res) {
+        Air.suggestPSP({bin: bin}, function (res) {
             $scope.suggested = {};
             $scope.suggested[bin] = res.suggested;
         })
@@ -25,7 +25,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
         Air.train();
     };
 
-    $scope.reset = function() {
+    $scope.reset = function () {
         Air.reset();
     };
 
@@ -57,8 +57,8 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
                             },
                             chart: {
                                 type: 'area',
-                                width: '300',
-                                height: '200',
+                                width: '350',
+                                height: '245',
                                 backgroundColor: '#f2f2f2',
                                 animation: false
                             },
