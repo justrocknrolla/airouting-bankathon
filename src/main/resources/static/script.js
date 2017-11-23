@@ -86,5 +86,5 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
     }
 
     reload();
-    setInterval(reload, 2000);
+    setInterval(reload, 1000);
 });
