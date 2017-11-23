@@ -1,14 +1,14 @@
 package com.ai.routing.controllers;
 
 import com.ai.routing.model.BinPsp;
-import com.ai.routing.model.Point;
 import com.ai.routing.model.Stats;
 import com.ai.routing.services.AIRoutingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 @RestController
@@ -46,10 +46,13 @@ public class RestMainController {
 
     @ResponseBody
     @RequestMapping(value = "/chart", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<Point> getChartData(@RequestParam String bin,
-                                    @RequestParam String psp,
-                                    @RequestParam(defaultValue = "100") int n) {
-        return aiRoutingService.getChartData(new BinPsp(bin, psp), n);
+    public Map getChartData(@RequestParam String bin,
+                            @RequestParam String psp,
+                            @RequestParam(defaultValue = "100") int n) {
+        Map<String,Object> result = new HashMap<>();
+        result.put("points", aiRoutingService.getChartData(new BinPsp(bin, psp), n));
+        result.put("stats", aiRoutingService.getStats(new BinPsp(bin, psp)));
+        return result;
     }
 
     @ResponseBody

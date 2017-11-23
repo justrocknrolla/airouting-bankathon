@@ -2,7 +2,7 @@ var air = angular.module('air', ['highcharts-ng', 'ngResource']);
 
 air.factory('Chart', function ($resource) {
     return $resource('/:action/:id', {}, {
-        chart: {method: 'GET', isArray: true, params: {action: 'chart'}},
+        chart: {method: 'GET', params: {action: 'chart'}},
         stats: {method: 'GET', params: {action: 'stats'}}
     });
 });
@@ -18,18 +18,20 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
         $scope.loaded = 0;
 
         for (var j = 0; j < bins.length; j++) {
-            for (var i = 0; i < psps.length; i++) {(function (bin, psp) {
-                var average = 0.0;
-                var deviation = 0.0;
-                Chart.stats({bin: bin, psp: psp}, function(result) {
-                    average = (result.average * 100).toFixed(0);
-                    deviation = (result.deviation * 100).toFixed(0);
-                });Chart.chart({bin: bin, psp: psp, n: 40}, function (res) {
-                    $scope.loaded++;
+            for (var i = 0; i < psps.length; i++) {
+                (function (bin, psp) {
+                    Chart.chart({bin: bin, psp: psp, n: 40}, function (res) {
+                        $scope.loaded++;
+
+                        var points = res.points;
+                        var stats = res.stats;
+
+                        var average = (stats.average * 100).toFixed(0);
+                        var deviation = (stats.deviation * 100).toFixed(0);
 
                         var vals = [];
-                        for (var k = 0; k < res.length; k++) {
-                            vals.push(res[k].y);
+                        for (var k = 0; k < points.length; k++) {
+                            vals.push(points[k].y);
                         }
 
                         (chartsCfgs[bin] || (chartsCfgs[bin] = {}))[psp] = {
