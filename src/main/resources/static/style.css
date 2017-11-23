@@ -17,6 +17,7 @@ img.centered-psp {
 .charts-tbl {
     width: 80%;
     max-width: 760px;
+    margin-left: 10%;
 }
 
 .charts-tbl td { border: 0 }
