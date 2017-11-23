@@ -3,6 +3,7 @@ package com.ai.routing.controllers;
 import com.ai.routing.model.BinPsp;
 import com.ai.routing.model.Stats;
 import com.ai.routing.services.AIRoutingService;
+import com.ai.routing.services.HistoryImporterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,13 @@ import java.util.stream.IntStream;
 @RestController
 public class RestMainController {
 
-    private AIRoutingService aiRoutingService;
+    private final AIRoutingService aiRoutingService;
+    private final HistoryImporterService historyImporterService;
 
     @Autowired
-    RestMainController(AIRoutingService aiRoutingService) {
+    RestMainController(AIRoutingService aiRoutingService, HistoryImporterService historyImporterService) {
         this.aiRoutingService = aiRoutingService;
+        this.historyImporterService = historyImporterService;
     }
 
     @RequestMapping(value = "/suggestPSP", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -63,4 +66,10 @@ public class RestMainController {
         return aiRoutingService.getStats(new BinPsp(bin, psp));
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/train", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map train() {
+        historyImporterService.importDataDespacito(getClass().getResourceAsStream("/trained_data.txt"));
+        return Collections.emptyMap();
+    }
 }

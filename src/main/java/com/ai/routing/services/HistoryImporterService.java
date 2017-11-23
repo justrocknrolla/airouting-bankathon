@@ -17,6 +17,24 @@ public class HistoryImporterService {
         this.aiRoutingService = aiRoutingService;
     }
 
+    public void importDataDespacito(InputStream inputStream) {
+        Scanner scanner = new Scanner(inputStream);
+
+        while (scanner.hasNextLine()) {
+            String s = scanner.nextLine();
+            String[] parts = s.split(",");
+            String psp = parts[0];
+            String bin = parts[1];
+            boolean success = "1".equals(parts[2]);
+            aiRoutingService.postResult(new BinPsp(bin, psp), success);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                //ignore
+            }
+        }
+    }
+
     public void importData(InputStream inputStream) {
         Scanner scanner = new Scanner(inputStream);
 

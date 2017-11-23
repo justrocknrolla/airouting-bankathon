@@ -21,6 +21,12 @@
             <td ng-repeat="psp in psps">
                 <img class="centered-psp" ng-src="{{psp}}.png"/>
             </td>
+            <td>
+                <button class="btn btn-success btn-large"
+                        ng-click="train()">
+                    Train algorithm
+                </button>
+            </td>
         </tr>
         <tr ng-repeat="bin in bins">
             <td>
@@ -38,7 +44,8 @@
                <button style="width: 110px" ng-click="suggestPSP(bin)">PSP for {{bin | uppercase}}</button>
                 <br/>
                 <br/>
-                <img ng-if="suggested[bin]" style="height: 30px"
+                <img ng-if="suggested[bin]"
+                     style="height: 30px"
                      ng-src="{{suggested[bin]}}.png"/>
             </td>
         </tr>

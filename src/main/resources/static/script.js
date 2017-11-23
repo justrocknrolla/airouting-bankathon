@@ -3,7 +3,8 @@ var air = angular.module('air', ['highcharts-ng', 'ngResource']);
 air.factory('Air', function ($resource) {
     return $resource('/:action/:id', {}, {
         chart: {method: 'GET', params: {action: 'chart'}},
-        suggestPSP: {method: 'GET', params: {action: 'suggestPSP'}}
+        suggestPSP: {method: 'GET', params: {action: 'suggestPSP'}},
+        train: {method: 'POST', params: {action: 'train'}}
     });
 });
 
@@ -19,6 +20,10 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
         })
     };
 
+    $scope.train = function () {
+        Air.train();
+    };
+
     $scope.total = psps.length * bins.length;
 
     function reload() {
@@ -27,7 +32,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
         for (var j = 0; j < bins.length; j++) {
             for (var i = 0; i < psps.length; i++) {
                 (function (bin, psp) {
-                    Air.chart({bin: bin, psp: psp, n: 40}, function (res) {
+                    Air.chart({bin: bin, psp: psp, n: 60}, function (res) {
                         $scope.loaded++;
 
                         var points = res.points;
@@ -43,7 +48,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
 
                         (chartsCfgs[bin] || (chartsCfgs[bin] = {}))[psp] = {
                             title: {
-                                text: average + '% +/- ' + deviation + '%'
+                                text: average + ' ± ' + deviation + ' %'
                             },
                             chart: {
                                 type: 'area',
