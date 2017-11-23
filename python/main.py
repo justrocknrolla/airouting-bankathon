@@ -40,7 +40,8 @@ def generate_all_records(psp_bins, args):
 if __name__ == "__main__":
     psp_bins = generate_psp_bin_list()
     args = parse_commandline()
-    records = generate_all_records(psp_bins, args)
+    records = list(generate_all_records(psp_bins, args))
+    random.shuffle(records)
 
     for record in records:
         psp, bank_identification_number, observation = record
