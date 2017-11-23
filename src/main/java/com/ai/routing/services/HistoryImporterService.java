@@ -28,7 +28,7 @@ public class HistoryImporterService {
             boolean success = "1".equals(parts[2]);
             aiRoutingService.postResult(new BinPsp(bin, psp), success);
             try {
-                Thread.sleep(50);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 //ignore
             }
