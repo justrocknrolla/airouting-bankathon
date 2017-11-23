@@ -19,6 +19,8 @@ img.centered-psp {
     max-width: 760px;
 }
 
+.charts-tbl td { border: 0 }
+
 .ai-routing-heading {
     font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
     font-style: italic;
