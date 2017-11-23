@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -21,10 +22,10 @@ public class RestMainController {
         this.aiRoutingService = aiRoutingService;
     }
 
-    @RequestMapping(value = "/suggestPSP", method = RequestMethod.GET, produces = "text/html")
+    @RequestMapping(value = "/suggestPSP", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public String get(String bin) {
-        return aiRoutingService.suggestPSP(bin);
+    public Map get(String bin) {
+        return Collections.singletonMap("suggested", aiRoutingService.suggestPSP(bin));
     }
 
     @RequestMapping(value = "/postResult", method = RequestMethod.POST, produces = "text/html")

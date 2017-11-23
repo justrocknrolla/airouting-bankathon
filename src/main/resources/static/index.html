@@ -19,13 +19,13 @@
         <tr>
             <td></td>
             <td ng-repeat="psp in psps">
-                <img class="centered-psp" src="{{psp}}.png"/>
+                <img class="centered-psp" ng-src="{{psp}}.png"/>
             </td>
         </tr>
         <tr ng-repeat="bin in bins">
             <td>
                 <div style="width: 50%;">
-                    <div><img src="{{bin}}.png" style="width: 80px;"/></div>
+                    <div><img ng-src="{{bin}}.png" style="width: 80px;"/></div>
                     <p style="text-align: center; font-size: 30px; width: 80px; text-transform: uppercase;">{{bin}}</p>
                 </div>
             </td>
@@ -33,6 +33,13 @@
                 <div ng-if="chartsCfgs[bin][psp]">
                     <highchart config="chartsCfgs[bin][psp]"></highchart>
                 </div>
+            </td>
+            <td>
+               <button style="width: 80px" ng-click="suggestPSP(bin)">Get {{bin}}</button>
+                <br/>
+                <br/>
+                <img ng-if="suggested[bin]" style="height: 30px"
+                     ng-src="{{suggested[bin]}}.png"/>
             </td>
         </tr>
     </table>

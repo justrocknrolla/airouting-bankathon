@@ -1,16 +1,23 @@
 var air = angular.module('air', ['highcharts-ng', 'ngResource']);
 
-air.factory('Chart', function ($resource) {
+air.factory('Air', function ($resource) {
     return $resource('/:action/:id', {}, {
         chart: {method: 'GET', params: {action: 'chart'}},
-        stats: {method: 'GET', params: {action: 'stats'}}
+        suggestPSP: {method: 'GET', params: {action: 'suggestPSP'}}
     });
 });
 
-air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
+air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
     var psps = $scope.psps = ['adyen', 'wirecard'];
     var bins = $scope.bins = ['bin1', 'bin2', 'bin3'];
     var chartsCfgs = $scope.chartsCfgs = {};
+
+    $scope.suggestPSP = function (bin) {
+        Air.suggestPSP({bin:bin}, function (res) {
+            $scope.suggested = {};
+            $scope.suggested[bin] = res.suggested;
+        })
+    };
 
     $scope.total = psps.length * bins.length;
 
@@ -20,7 +27,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Chart) {
         for (var j = 0; j < bins.length; j++) {
             for (var i = 0; i < psps.length; i++) {
                 (function (bin, psp) {
-                    Chart.chart({bin: bin, psp: psp, n: 40}, function (res) {
+                    Air.chart({bin: bin, psp: psp, n: 40}, function (res) {
                         $scope.loaded++;
 
                         var points = res.points;
