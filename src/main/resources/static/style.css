@@ -3,6 +3,10 @@ body {
     background-color: #f2f2f2;
 }
 
+button {
+    font-size: 2rem !important;
+}
+
 img.centered-psp {
     display: block;
     margin-left: auto;
