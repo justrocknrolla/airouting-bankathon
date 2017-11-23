@@ -15,7 +15,7 @@ public class RoutingApplication {
 	@Autowired
 	public RoutingApplication(HistoryImporterService historyImporterService) {
 		this.historyImporterService = historyImporterService;
-		historyImporterService.importData(RoutingApplication.class.getResourceAsStream("/data.txt"));
+		historyImporterService.importData(RoutingApplication.class.getResourceAsStream("/initial_data.txt"));
 	}
 
 	public static void main(String[] args) {
