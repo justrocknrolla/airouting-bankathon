@@ -72,4 +72,12 @@ public class RestMainController {
         historyImporterService.importDataDespacito(getClass().getResourceAsStream("/trained_data.txt"));
         return Collections.emptyMap();
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/reset", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Map reset() {
+        aiRoutingService.flushStorage();
+        historyImporterService.importData(getClass().getResourceAsStream("/initial_data.txt"));
+        return Collections.emptyMap();
+    }
 }

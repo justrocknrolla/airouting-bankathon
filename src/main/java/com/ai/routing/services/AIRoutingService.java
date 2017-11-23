@@ -19,6 +19,10 @@ public class AIRoutingService {
         return (float) beta.sample();
     }
 
+    public void flushStorage() {
+        storage = new DataStorage();
+    }
+
     private BetaDistribution getDecisionDistribution(BinPsp binPsp) {
         History record = storage.getHistory(binPsp);
         return new BetaDistribution(record.getSuccessCount() + 1, record.getFailCount() + 1);

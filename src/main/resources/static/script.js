@@ -4,7 +4,8 @@ air.factory('Air', function ($resource) {
     return $resource('/:action/:id', {}, {
         chart: {method: 'GET', params: {action: 'chart'}},
         suggestPSP: {method: 'GET', params: {action: 'suggestPSP'}},
-        train: {method: 'POST', params: {action: 'train'}}
+        train: {method: 'POST', params: {action: 'train'}},
+        reset: {method: 'POST', params: {action: 'reset'}}
     });
 });
 
@@ -22,6 +23,10 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
 
     $scope.train = function () {
         Air.train();
+    };
+
+    $scope.reset = function() {
+        Air.reset();
     };
 
     $scope.total = psps.length * bins.length;
