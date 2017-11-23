@@ -73,7 +73,7 @@ air.controller('ChartsCtrl', function ChartsCtrl($scope, $interval, Air) {
                             },
                             series: [
                                 {
-                                    name: 'P',
+                                    name: 'Acceptance Rate',
                                     color: psp === 'adyen' ? '#77ff77' : '#7777ff',
                                     data: vals
                                 }
